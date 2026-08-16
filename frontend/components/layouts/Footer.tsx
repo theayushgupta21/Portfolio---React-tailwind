@@ -45,7 +45,7 @@ export default function ContactFooter() {
 
     // Puzzle state
     const [puzzleSolved, setPuzzleSolved] = useState(false);
-    const [selectedPiece, setSelectedPiece] = useState(null);
+    const [selectedPiece, setSelectedPiece] = useState<number | null>(null);
 
     const scrollToTop = () => {
         window.scrollTo({
@@ -54,7 +54,7 @@ export default function ContactFooter() {
         });
     };
 
-    const handlePuzzleClick = (index) => {
+    const handlePuzzleClick = (index: number) => {
         if (puzzleSolved) return;
 
         /*
@@ -96,13 +96,14 @@ export default function ContactFooter() {
         setSelectedPiece(null);
     };
 
-    const handleSubmit = async (e) => {
+    const handleSubmit = async (
+        e: React.SubmitEvent<HTMLFormElement>
+    ) => {
         e.preventDefault();
 
         if (!puzzleSolved || isSending) return;
 
         const form = e.currentTarget;
-
         const formData = new FormData(form);
 
         const name = String(formData.get("name") || "").trim();
@@ -132,18 +133,15 @@ export default function ContactFooter() {
 
             if (!response.ok) {
                 throw new Error(
-                    data.message || "Something went wrong."
+                    data.message || "Failed to send message."
                 );
             }
 
-            // Reset form
             form.reset();
 
-            // Reset puzzle
             setPuzzleSolved(false);
             setSelectedPiece(null);
 
-            // Show success notification
             setShowSuccess(true);
 
             setTimeout(() => {
@@ -155,7 +153,7 @@ export default function ContactFooter() {
             alert(
                 error instanceof Error
                     ? error.message
-                    : "Failed to send message. Please try again."
+                    : "Failed to send message."
             );
         } finally {
             setIsSending(false);
