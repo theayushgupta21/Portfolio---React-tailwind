@@ -1,7 +1,8 @@
 "use client";
 
-import React, { FormEvent, useEffect, useState } from "react";
+import React, { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
+
 import {
     FaGithub,
     FaLinkedinIn,
@@ -38,13 +39,13 @@ const socialLinks = [
     },
 ];
 
-export default function ContactFooter(): React.JSX.Element {
+export default function ContactFooter() {
     const [showSuccess, setShowSuccess] = useState(false);
     const [isSending, setIsSending] = useState(false);
 
     // Puzzle state
     const [puzzleSolved, setPuzzleSolved] = useState(false);
-    const [selectedPiece, setSelectedPiece] = useState<number | null>(null);
+    const [selectedPiece, setSelectedPiece] = useState(null);
 
     const scrollToTop = () => {
         window.scrollTo({
@@ -53,7 +54,7 @@ export default function ContactFooter(): React.JSX.Element {
         });
     };
 
-    const handlePuzzleClick = (index: number) => {
+    const handlePuzzleClick = (index) => {
         if (puzzleSolved) return;
 
         /*
@@ -95,38 +96,71 @@ export default function ContactFooter(): React.JSX.Element {
         setSelectedPiece(null);
     };
 
-    const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
 
+        if (!puzzleSolved || isSending) return;
+
         const form = e.currentTarget;
+
         const formData = new FormData(form);
 
-        const name = formData.get("name");
-        const email = formData.get("email");
-        const message = formData.get("message");
+        const name = String(formData.get("name") || "").trim();
+        const email = String(formData.get("email") || "").trim();
+        const message = String(formData.get("message") || "").trim();
 
-        if (!name || !email || !message) return;
+        if (!name || !email || !message) {
+            return;
+        }
 
         setIsSending(true);
 
-        await new Promise((resolve) => setTimeout(resolve, 900));
+        try {
+            const response = await fetch("/api/contact", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    name,
+                    email,
+                    message,
+                }),
+            });
 
-        console.log({
-            name,
-            email,
-            message,
-        });
+            const data = await response.json();
 
-        setIsSending(false);
-        form.reset();
+            if (!response.ok) {
+                throw new Error(
+                    data.message || "Something went wrong."
+                );
+            }
 
-        setShowSuccess(true);
+            // Reset form
+            form.reset();
 
-        setTimeout(() => {
-            setShowSuccess(false);
-        }, 5000);
+            // Reset puzzle
+            setPuzzleSolved(false);
+            setSelectedPiece(null);
+
+            // Show success notification
+            setShowSuccess(true);
+
+            setTimeout(() => {
+                setShowSuccess(false);
+            }, 5000);
+        } catch (error) {
+            console.error("Contact form error:", error);
+
+            alert(
+                error instanceof Error
+                    ? error.message
+                    : "Failed to send message. Please try again."
+            );
+        } finally {
+            setIsSending(false);
+        }
     };
-
     return (
         <>
             {/* =====================================================
