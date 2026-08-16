@@ -110,7 +110,7 @@ const projects: Project[] = [
             "https://github.com/YOUR_USERNAME/adoptify",
 
         live:
-            "https://adoptify.vercel.app",
+            "https://adoptify-phi.vercel.app/",
     },
 
     {
