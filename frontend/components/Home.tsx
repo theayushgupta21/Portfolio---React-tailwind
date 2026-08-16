@@ -723,7 +723,7 @@ export default function Home() {
 
                                 {/* Floating label */}
 
-                                <motion.div
+                                {/* <motion.div
                                     initial={{
                                         opacity: 0,
                                         scale: 0,
@@ -766,11 +766,11 @@ export default function Home() {
                                     <p className="mt-1 text-xs font-medium text-gray-700">
                                         Let's build something
                                     </p>
-                                </motion.div>
+                                </motion.div> */}
 
                                 {/* Developer badge */}
 
-                                <motion.div
+                                {/* <motion.div
                                     initial={{
                                         opacity: 0,
                                         scale: 0,
@@ -813,7 +813,7 @@ export default function Home() {
                                     <p className="mt-1 text-xs font-bold text-gray-800">
                                         Full Stack Dev
                                     </p>
-                                </motion.div>
+                                </motion.div> */}
                             </div>
                         </motion.div>
                     </div>
