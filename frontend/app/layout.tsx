@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono, Playfair_Display, DynaPuff, Momo_Signature, Redressed } from "next/font/google";
+import { Geist, Geist_Mono, Playfair_Display, DynaPuff, Redressed } from "next/font/google";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -23,12 +23,6 @@ const dynaPuff = DynaPuff({
   display: "swap",
 });
 
-const momoSignature = Momo_Signature({
-  weight: "400",
-  subsets: ["latin"],
-  variable: "--font-momo-signature",
-  display: "swap",
-});
 const redressed = Redressed({
   weight: "400",
   subsets: ["latin"],
@@ -49,7 +43,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} ${playfair.variable} ${dynaPuff.variable} ${momoSignature.variable} ${redressed.variable} h-full antialiased`}
+      className={`${geistSans.variable} ${geistMono.variable} ${playfair.variable} ${dynaPuff.variable} ${redressed.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">{children}</body>
     </html>
