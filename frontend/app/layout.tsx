@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono, Playfair_Display, DynaPuff, Redressed } from "next/font/google";
 import "./globals.css";
+import { image } from "framer-motion/client";
+import Profile from "@/public/Profileimage.png";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -33,6 +35,11 @@ const redressed = Redressed({
 export const metadata: Metadata = {
   title: "Portfolio-Ayush",
   description: "Aspiring Software Engineer | Portfolio Website",
+  icons: {
+    icon: Profile.src,
+    shortcut: Profile.src,
+    apple: Profile.src,
+  },
 };
 
 export default function RootLayout({
