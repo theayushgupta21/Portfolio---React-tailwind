@@ -454,8 +454,9 @@ export default function Home() {
                                     }}
                                     onClick={() =>
                                         window.open(
-                                            "/Ayush_Gupta_Resume.pdf",
-                                            "_blank"
+                                            "/Ayush_Gupta.pdf",
+                                            "blank"
+
                                         )
                                     }
                                     className="
